@@ -1,128 +1,157 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin, MessageCircle, Phone } from "lucide-react";
 import { SiteShell } from "@/components/site/SiteShell";
-import { PageHero } from "@/components/site/PageHero";
-import { Container, Placeholder, Section } from "@/components/site/Section";
+import { Container, Section, SectionHeading } from "@/components/site/Section";
 import { Reveal } from "@/components/site/Reveal";
-import { LefaButton } from "@/components/ui/lefa-button";
-import { Field, Textarea, TextInput } from "@/components/forms/fields";
+import { LefaLink } from "@/components/ui/lefa-button";
+import { CONTACT_INFO } from "@/components/site/data";
+import { publicSeoHead } from "@/lib/seo";
 
 const title = "Contact — LEFA CONNECT";
 const description =
-  "Get in touch with Lefa Connect about membership, livestock, projects or partnership enquiries.";
+  "Contact Lefa Connect about membership, the Lefa vision, livestock, projects or a general enquiry.";
 
 export const Route = createFileRoute("/contact")({
-  head: () => ({
-    meta: [
-      { title },
-      { name: "description", content: description },
-      { property: "og:title", content: title },
-      { property: "og:description", content: description },
-      { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-    ],
-  }),
+  head: () => publicSeoHead(title, description, "/contact"),
   component: ContactPage,
 });
 
+const CONTACT_REASONS = [
+  ["Membership", "Questions about joining Lefa Connect and membership participation."],
+  ["The Lefa Vision", "Learn more about what Lefa is building and where the journey is heading."],
+  [
+    "Livestock & Projects",
+    "Questions about the agricultural foundation and the work connected to it.",
+  ],
+  ["General Enquiries", "Anything else you would like to ask or discuss."],
+] as const;
+
 function ContactPage() {
-  const [sent, setSent] = useState(false);
+  const whatsappHref = `https://wa.me/${CONTACT_INFO.phone.replace(/\D/g, "")}`;
 
   return (
     <SiteShell>
-      <PageHero
-        eyebrow="Contact"
-        title="Let's start a conversation."
-        intro="Send an enquiry and the Lefa Connect team will respond through the confirmed office channels."
-      />
+      <section className="bg-[#173f36] py-20 text-on-navy md:py-28">
+        <Container>
+          <Reveal className="max-w-3xl">
+            <p className="eyebrow text-[var(--gold)]">Contact Lefa</p>
+            <h1 className="mt-5 font-display text-[2.8rem] leading-[1.02] text-on-navy md:text-[3.6rem]">
+              Let&apos;s talk.
+            </h1>
+            <p className="mt-6 max-w-2xl text-base leading-relaxed text-on-navy-muted md:text-lg">
+              Whether you would like to learn more about membership, understand the Lefa vision, or
+              simply have a question, we would be happy to hear from you.
+            </p>
+          </Reveal>
+        </Container>
+      </section>
 
       <Section tone="ivory">
-        <Container className="grid gap-14 lg:grid-cols-12 lg:gap-20">
-          <div className="lg:col-span-5">
-            <h2 className="font-display text-2xl text-navy">Office details</h2>
-            <ul className="mt-8 divide-y divide-border border-y border-border text-sm">
-              <li className="flex gap-4 py-5">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-heritage" aria-hidden="true" />
-                <span className="text-muted-foreground">
-                  Head office address
-                  <Placeholder>To confirm</Placeholder>
-                </span>
-              </li>
-              <li className="flex gap-4 py-5">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-heritage" aria-hidden="true" />
-                <span className="text-muted-foreground">
-                  Telephone number
-                  <Placeholder>To confirm</Placeholder>
-                </span>
-              </li>
-              <li className="flex gap-4 py-5">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-heritage" aria-hidden="true" />
-                <span className="text-muted-foreground">
-                  Email address
-                  <Placeholder>To confirm</Placeholder>
-                </span>
-              </li>
-            </ul>
-            <p className="mt-8 text-sm text-muted-foreground">
-              Office hours and regional offices
-              <Placeholder>To confirm</Placeholder>
+        <Container>
+          <SectionHeading eyebrow="Get in touch" title="Choose the way that suits you." />
+          <div className="mt-10 grid gap-5 lg:grid-cols-3">
+            <Reveal className="border-t-2 border-[#25D366] bg-card p-6 shadow-[0_14px_32px_-26px_rgba(10,20,30,0.4)]">
+              <MessageCircle className="h-6 w-6 text-[#25D366]" aria-hidden="true" />
+              <h2 className="mt-5 font-display text-2xl text-navy">Chat with Lefa Connect</h2>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                For quick questions and direct conversations.
+              </p>
+              <a
+                href={whatsappHref}
+                target="_blank"
+                rel="noreferrer"
+                className="mt-6 inline-flex h-11 items-center justify-center bg-[#25D366] px-5 text-xs font-semibold tracking-[0.14em] text-white uppercase hover:bg-[#20bd5a]"
+              >
+                WhatsApp Us
+              </a>
+            </Reveal>
+            <Reveal
+              delay={70}
+              className="border-t-2 border-heritage bg-card p-6 shadow-[0_14px_32px_-26px_rgba(10,20,30,0.4)]"
+            >
+              <Phone className="h-6 w-6 text-heritage" aria-hidden="true" />
+              <h2 className="mt-5 font-display text-2xl text-navy">Call Lefa Connect</h2>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                For direct enquiries and conversations.
+              </p>
+              <a
+                href={`tel:${CONTACT_INFO.phone.replace(/\s/g, "")}`}
+                className="mt-6 inline-flex h-11 items-center justify-center border border-navy px-5 text-xs font-semibold tracking-[0.14em] text-navy uppercase hover:bg-navy hover:text-on-navy"
+              >
+                Call Us
+              </a>
+            </Reveal>
+            <Reveal
+              delay={140}
+              className="border-t-2 border-[var(--digital)] bg-card p-6 shadow-[0_14px_32px_-26px_rgba(10,20,30,0.4)]"
+            >
+              <Mail className="h-6 w-6 text-[var(--digital)]" aria-hidden="true" />
+              <h2 className="mt-5 font-display text-2xl text-navy">Email Lefa Connect</h2>
+              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                For detailed enquiries and information.
+              </p>
+              <a
+                href={`mailto:${CONTACT_INFO.email}`}
+                className="mt-6 inline-flex h-11 items-center justify-center border border-navy px-5 text-xs font-semibold tracking-[0.14em] text-navy uppercase hover:bg-navy hover:text-on-navy"
+              >
+                Email Us
+              </a>
+            </Reveal>
+          </div>
+        </Container>
+      </Section>
+
+      <Section tone="white" className="border-y border-border">
+        <Container>
+          <SectionHeading
+            eyebrow="What would you like to talk about?"
+            title="Start with what matters to you."
+          />
+          <ul className="mt-10 grid gap-6 border-y border-border sm:grid-cols-2 lg:grid-cols-4">
+            {CONTACT_REASONS.map(([heading, copy], index) => (
+              <Reveal
+                as="li"
+                key={heading}
+                delay={index * 60}
+                className="border-b border-border py-6 last:border-b-0 sm:px-5 sm:even:border-l lg:border-b-0 lg:border-r lg:first:pl-0 lg:last:border-r-0 lg:last:pr-0"
+              >
+                <h2 className="font-display text-xl text-navy">{heading}</h2>
+                <p className="mt-3 text-sm leading-relaxed text-muted-foreground">{copy}</p>
+              </Reveal>
+            ))}
+          </ul>
+        </Container>
+      </Section>
+
+      <Section tone="ivory">
+        <Container className="flex flex-col gap-7 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <p className="eyebrow text-heritage">Lefa Connect</p>
+            <h2 className="mt-3 font-display text-2xl text-navy">
+              We&apos;d love to hear from you.
+            </h2>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              Reach out through WhatsApp, phone or email and start a conversation with Lefa Connect.
+            </p>
+            <p className="mt-5 text-sm leading-relaxed text-muted-foreground">
+              <strong className="font-semibold text-navy">Office:</strong> {CONTACT_INFO.address}
             </p>
           </div>
-
-          <div className="lg:col-span-7">
-            {sent ? (
-              <Reveal className="border border-border bg-card p-10">
-                <p className="eyebrow text-heritage">Enquiry captured</p>
-                <h2 className="mt-4 font-display text-3xl text-navy">Thank you.</h2>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground">
-                  Your message has been captured in this interface. Delivery and routing
-                  will be enabled when the contact channel is connected to the Lefa
-                  Connect platform.
-                </p>
-                <LefaButton className="mt-8" variant="outline" onClick={() => setSent(false)}>
-                  Send another message
-                </LefaButton>
-              </Reveal>
-            ) : (
-              <form
-                className="border border-border bg-card p-8 md:p-10"
-                onSubmit={(event) => {
-                  event.preventDefault();
-                  setSent(true);
-                }}
-              >
-                <h2 className="font-display text-2xl text-navy">Send an enquiry</h2>
-                <div className="mt-8 grid gap-6 sm:grid-cols-2">
-                  <Field id="contact-name" label="Full name" required>
-                    <TextInput id="contact-name" name="name" required autoComplete="name" />
-                  </Field>
-                  <Field id="contact-email" label="Email address" required>
-                    <TextInput
-                      id="contact-email"
-                      name="email"
-                      type="email"
-                      required
-                      autoComplete="email"
-                    />
-                  </Field>
-                  <Field id="contact-phone" label="Phone number">
-                    <TextInput id="contact-phone" name="phone" type="tel" autoComplete="tel" />
-                  </Field>
-                  <Field id="contact-subject" label="Subject">
-                    <TextInput id="contact-subject" name="subject" />
-                  </Field>
-                  <div className="sm:col-span-2">
-                    <Field id="contact-message" label="Message" required>
-                      <Textarea id="contact-message" name="message" rows={6} required />
-                    </Field>
-                  </div>
-                </div>
-                <LefaButton type="submit" className="mt-8 w-full sm:w-auto" size="lg">
-                  Send Message
-                </LefaButton>
-              </form>
-            )}
+          <div className="flex flex-col gap-3 sm:flex-row">
+            <a
+              href={whatsappHref}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex h-12 items-center justify-center bg-[#25D366] px-7 text-xs font-semibold tracking-[0.14em] text-white uppercase hover:bg-[#20bd5a]"
+            >
+              WhatsApp Us
+            </a>
+            <a
+              href={`mailto:${CONTACT_INFO.email}`}
+              className="inline-flex h-12 items-center justify-center border border-navy px-7 text-xs font-semibold tracking-[0.14em] text-navy uppercase hover:bg-navy hover:text-on-navy"
+            >
+              Email Us
+            </a>
           </div>
         </Container>
       </Section>

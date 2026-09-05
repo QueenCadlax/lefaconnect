@@ -1,0 +1,20 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "lefa-connect",
+  "compatibility_date": "2026-08-20",
+  "main": ".output/server/index.mjs",
+  "assets": {
+    "directory": ".output/public",
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "lefa-connect-db",
+      "database_id": "REPLACE_WITH_CLOUDFLARE_D1_DATABASE_ID",
+      "migrations_dir": "migrations",
+    },
+  ],
+  "vars": {
+    "BETTER_AUTH_URL": "https://REPLACE_WITH_PUBLIC_HOST",
+  },
+}

@@ -1,6 +1,7 @@
 import type { ReactNode } from "react";
 import { SiteHeader } from "./SiteHeader";
 import { SiteFooter } from "./SiteFooter";
+import { WhatsAppButton } from "./WhatsAppButton";
 
 export function SiteShell({
   children,
@@ -14,6 +15,7 @@ export function SiteShell({
       <SiteHeader overlay={overlayHeader} />
       <main className={overlayHeader ? "flex-1" : "flex-1 pt-20"}>{children}</main>
       <SiteFooter />
+      <WhatsAppButton />
     </div>
   );
 }

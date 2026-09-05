@@ -1,40 +1,48 @@
 import { Link } from "@tanstack/react-router";
 import { Mail, MapPin, Phone } from "lucide-react";
 import { Logo } from "@/components/brand/Logo";
-import { LefaButton } from "@/components/ui/lefa-button";
-import { Container, Placeholder } from "./Section";
+import { LefaLink } from "@/components/ui/lefa-button";
+import { Container } from "./Section";
+import { CONTACT_INFO } from "./data";
 
-const FOOTER_LINKS = [
-  { to: "/", label: "Home" },
+const EXPLORE_LINKS = [
   { to: "/about", label: "About" },
   { to: "/how-it-works", label: "How It Works" },
   { to: "/membership", label: "Membership" },
-  { to: "/livestock-projects", label: "Livestock & Projects" },
   { to: "/operations", label: "Operations" },
-  { to: "/contact", label: "Contact" },
-  { to: "/login", label: "Login" },
+  { to: "/livestock-projects", label: "Livestock & Projects" },
 ] as const;
 
 export function SiteFooter() {
   return (
     <footer className="bg-navy text-on-navy">
-      <Container className="py-16 md:py-20">
-        <div className="grid gap-12 lg:grid-cols-12">
-          <div className="lg:col-span-4">
-            <Logo tone="light" withTagline />
-            <p className="mt-6 max-w-xs text-sm leading-relaxed text-on-navy-muted">
-              A connected digital foundation for membership, livestock development and
-              organisational operations.
+      <Container className="py-16 md:py-20 lg:py-24">
+        <div className="grid gap-14 border-b border-[color-mix(in_oklab,var(--on-navy)_12%,transparent)] pb-14 md:gap-16 lg:grid-cols-[1.35fr_0.75fr_1fr] lg:gap-20 lg:pb-18">
+          <div className="max-w-md">
+            <Logo
+              tone="light"
+              withTagline
+              showWordmark={false}
+              className="gap-2 [&>img]:h-9 [&>img]:w-12 sm:[&>img]:h-10 sm:[&>img]:w-14"
+            />
+            <p className="mt-8 max-w-sm text-sm leading-7 text-on-navy-muted">
+              A digital operating platform connecting membership, livestock, records, contributions
+              and organisational operations.
             </p>
-            <div className="mt-7 rounded border border-[color-mix(in_oklab,var(--on-navy)_15%,transparent)] bg-[color-mix(in_oklab,var(--navy)_80%,transparent)] px-3 py-2 text-xs uppercase tracking-[0.18em] text-on-navy-muted">
-              Placeholder channels to confirm
-            </div>
+            <LefaLink
+              to="/apply"
+              variant="link"
+              size="sm"
+              className="mt-8 px-0 text-[0.68rem] tracking-[0.16em] text-on-navy hover:text-[var(--gold)]"
+            >
+              Become a Member
+            </LefaLink>
           </div>
 
-          <nav aria-label="Footer" className="lg:col-span-3">
-            <h2 className="eyebrow text-[var(--gold)]">Navigate</h2>
-            <ul className="mt-6 grid grid-cols-2 gap-x-6 gap-y-3 lg:grid-cols-1">
-              {FOOTER_LINKS.map((link) => (
+          <nav aria-label="Explore" className="lg:justify-self-end">
+            <h2 className="eyebrow text-[var(--gold)]">Explore</h2>
+            <ul className="mt-7 space-y-4">
+              {EXPLORE_LINKS.map((link) => (
                 <li key={link.label}>
                   <Link
                     to={link.to}
@@ -47,75 +55,51 @@ export function SiteFooter() {
             </ul>
           </nav>
 
-          <div className="lg:col-span-3">
-            <h2 className="eyebrow text-[var(--gold)]">Contact</h2>
-            <ul className="mt-6 space-y-4 text-sm text-on-navy-muted">
+          <div className="max-w-sm lg:justify-self-end">
+            <h2 className="eyebrow text-[var(--gold)]">Connect</h2>
+            <ul className="mt-7 space-y-5 text-sm leading-relaxed text-on-navy-muted">
               <li className="flex gap-3">
-                <MapPin className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>
-                  Head office address
-                  <Placeholder>To confirm</Placeholder>
-                </span>
+                <Mail className="mt-0.5 h-4 w-4 shrink-0 text-[var(--gold)]" aria-hidden="true" />
+                <a
+                  href={`mailto:${CONTACT_INFO.email}`}
+                  className="transition-colors hover:text-on-navy"
+                >
+                  {CONTACT_INFO.email}
+                </a>
               </li>
               <li className="flex gap-3">
-                <Phone className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>
-                  Telephone number
-                  <Placeholder>To confirm</Placeholder>
-                </span>
+                <Phone className="mt-0.5 h-4 w-4 shrink-0 text-[var(--gold)]" aria-hidden="true" />
+                <a
+                  href={`tel:${CONTACT_INFO.phone.replace(/\s/g, "")}`}
+                  className="transition-colors hover:text-on-navy"
+                >
+                  {CONTACT_INFO.phone}
+                </a>
               </li>
               <li className="flex gap-3">
-                <Mail className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>
-                  Email address
-                  <Placeholder>To confirm</Placeholder>
-                </span>
+                <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-[var(--gold)]" aria-hidden="true" />
+                <span>{CONTACT_INFO.address}</span>
               </li>
             </ul>
           </div>
-
-          <div className="lg:col-span-2">
-            <h2 className="eyebrow text-[var(--gold)]">Updates</h2>
-            <p className="mt-6 text-sm text-on-navy-muted">
-              Occasional news from the Lefa Connect ecosystem.
-            </p>
-            <form
-              className="mt-4 flex flex-col gap-2"
-              onSubmit={(event) => event.preventDefault()}
-            >
-              <label htmlFor="newsletter-email" className="sr-only">
-                Email address
-              </label>
-              <input
-                id="newsletter-email"
-                type="email"
-                placeholder="you@example.com"
-                className="h-11 w-full border border-[color-mix(in_oklab,var(--on-navy)_20%,transparent)] bg-transparent px-3 text-sm text-on-navy placeholder:text-on-navy-muted/70 focus:border-[var(--gold)] focus:outline-none"
-              />
-              <LefaButton type="submit" variant="ghostLight" size="sm">
-                Sign up
-              </LefaButton>
-            </form>
-          </div>
         </div>
 
-        <div className="mt-14 flex flex-col gap-3 border-t border-[color-mix(in_oklab,var(--on-navy)_12%,transparent)] pt-7 text-xs text-on-navy-muted sm:flex-row sm:items-center sm:justify-between">
-          <p>© 2026 Lefa Connect. All rights reserved.</p>
-          <div className="flex flex-wrap items-center gap-4">
+        <div className="flex flex-col gap-5 pt-7 text-xs text-on-navy-muted sm:flex-row sm:items-center sm:justify-between">
+          <p>© 2026 Lefa Connect</p>
+          <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
             <a href="#" className="transition-colors hover:text-on-navy">
               Privacy Policy
             </a>
+            <span aria-hidden="true">·</span>
             <a href="#" className="transition-colors hover:text-on-navy">
               Terms of Use
             </a>
+            <span aria-hidden="true">·</span>
             <a href="#" className="transition-colors hover:text-on-navy">
               Cookie Policy
             </a>
           </div>
         </div>
-        <p className="mt-4 text-right text-[0.62rem] tracking-[0.14em] uppercase text-on-navy-muted">
-          Heritage. Livelihood. Growth. Connected.
-        </p>
       </Container>
     </footer>
   );

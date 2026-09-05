@@ -12,3 +12,10 @@ Allow: /
 
 User-agent: *
 Allow: /
+
+Disallow: /admin
+Disallow: /dashboard
+Disallow: /applicant
+Disallow: /login
+
+Sitemap: https://lefa-connect.com/sitemap.xml

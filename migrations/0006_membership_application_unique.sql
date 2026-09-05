@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `membership_application_idx` ON `membership` (`application_id`);

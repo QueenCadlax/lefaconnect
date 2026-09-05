@@ -11,13 +11,17 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AboutRouteImport } from './routes/about'
+import { Route as AdminRouteImport } from './routes/admin'
+import { Route as ApplicantRouteImport } from './routes/applicant'
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as LivestockProjectsRouteImport } from './routes/livestock-projects'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as OperationsRouteImport } from './routes/operations'
+import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -29,6 +33,16 @@ const AboutRoute = AboutRouteImport.update({
   path: '/about',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AdminRoute = AdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApplicantRoute = ApplicantRouteImport.update({
+  id: '/applicant',
+  path: '/applicant',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApplyRoute = ApplyRouteImport.update({
   id: '/apply',
   path: '/apply',
@@ -37,6 +51,11 @@ const ApplyRoute = ApplyRouteImport.update({
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DashboardRoute = DashboardRouteImport.update({
+  id: '/dashboard',
+  path: '/dashboard',
   getParentRoute: () => rootRouteImport,
 } as any)
 const HowItWorksRoute = HowItWorksRouteImport.update({
@@ -64,87 +83,120 @@ const OperationsRoute = OperationsRouteImport.update({
   path: '/operations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
+  id: '/api/auth/$',
+  path: '/api/auth/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/applicant': typeof ApplicantRoute
   '/apply': typeof ApplyRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/how-it-works': typeof HowItWorksRoute
   '/livestock-projects': typeof LivestockProjectsRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/operations': typeof OperationsRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/applicant': typeof ApplicantRoute
   '/apply': typeof ApplyRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/how-it-works': typeof HowItWorksRoute
   '/livestock-projects': typeof LivestockProjectsRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/operations': typeof OperationsRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
+  '/admin': typeof AdminRoute
+  '/applicant': typeof ApplicantRoute
   '/apply': typeof ApplyRoute
   '/contact': typeof ContactRoute
+  '/dashboard': typeof DashboardRoute
   '/how-it-works': typeof HowItWorksRoute
   '/livestock-projects': typeof LivestockProjectsRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/operations': typeof OperationsRoute
+  '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
     | '/about'
+    | '/admin'
+    | '/applicant'
     | '/apply'
     | '/contact'
+    | '/dashboard'
     | '/how-it-works'
     | '/livestock-projects'
     | '/login'
     | '/membership'
     | '/operations'
+    | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
     | '/about'
+    | '/admin'
+    | '/applicant'
     | '/apply'
     | '/contact'
+    | '/dashboard'
     | '/how-it-works'
     | '/livestock-projects'
     | '/login'
     | '/membership'
     | '/operations'
+    | '/api/auth/$'
   id:
     | '__root__'
     | '/'
     | '/about'
+    | '/admin'
+    | '/applicant'
     | '/apply'
     | '/contact'
+    | '/dashboard'
     | '/how-it-works'
     | '/livestock-projects'
     | '/login'
     | '/membership'
     | '/operations'
+    | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
+  AdminRoute: typeof AdminRoute
+  ApplicantRoute: typeof ApplicantRoute
   ApplyRoute: typeof ApplyRoute
   ContactRoute: typeof ContactRoute
+  DashboardRoute: typeof DashboardRoute
   HowItWorksRoute: typeof HowItWorksRoute
   LivestockProjectsRoute: typeof LivestockProjectsRoute
   LoginRoute: typeof LoginRoute
   MembershipRoute: typeof MembershipRoute
   OperationsRoute: typeof OperationsRoute
+  ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -163,6 +215,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/admin': {
+      id: '/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AdminRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/applicant': {
+      id: '/applicant'
+      path: '/applicant'
+      fullPath: '/applicant'
+      preLoaderRoute: typeof ApplicantRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/apply': {
       id: '/apply'
       path: '/apply'
@@ -175,6 +241,13 @@ declare module '@tanstack/react-router' {
       path: '/contact'
       fullPath: '/contact'
       preLoaderRoute: typeof ContactRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/dashboard': {
+      id: '/dashboard'
+      path: '/dashboard'
+      fullPath: '/dashboard'
+      preLoaderRoute: typeof DashboardRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/how-it-works': {
@@ -212,19 +285,30 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OperationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/auth/$': {
+      id: '/api/auth/$'
+      path: '/api/auth/$'
+      fullPath: '/api/auth/$'
+      preLoaderRoute: typeof ApiAuthSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
+  AdminRoute: AdminRoute,
+  ApplicantRoute: ApplicantRoute,
   ApplyRoute: ApplyRoute,
   ContactRoute: ContactRoute,
+  DashboardRoute: DashboardRoute,
   HowItWorksRoute: HowItWorksRoute,
   LivestockProjectsRoute: LivestockProjectsRoute,
   LoginRoute: LoginRoute,
   MembershipRoute: MembershipRoute,
   OperationsRoute: OperationsRoute,
+  ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -2,13 +2,7 @@ import type { ReactNode } from "react";
 import { cn } from "@/lib/utils";
 import { Reveal } from "./Reveal";
 
-export function Container({
-  children,
-  className,
-}: {
-  children: ReactNode;
-  className?: string;
-}) {
+export function Container({ children, className }: { children: ReactNode; className?: string }) {
   return (
     <div className={cn("mx-auto w-full max-w-[84rem] px-6 md:px-10 xl:px-14", className)}>
       {children}
@@ -35,7 +29,7 @@ export function Section({
   } as const;
 
   return (
-    <section id={id} className={cn("py-20 md:py-28 lg:py-32", tones[tone], className)}>
+    <section id={id} className={cn("py-10 md:py-14 lg:py-18", tones[tone], className)}>
       {children}
     </section>
   );
@@ -58,26 +52,15 @@ export function SectionHeading({
 }) {
   const light = tone === "light";
   return (
-    <Reveal
-      className={cn(
-        "max-w-3xl",
-        align === "center" && "mx-auto text-center",
-        className,
-      )}
-    >
+    <Reveal className={cn("max-w-3xl", align === "center" && "mx-auto text-center", className)}>
       {eyebrow ? (
-        <p
-          className={cn(
-            "eyebrow mb-5",
-            light ? "text-[var(--gold)]" : "text-heritage",
-          )}
-        >
+        <p className={cn("eyebrow mb-5", light ? "text-[var(--gold)]" : "text-heritage")}>
           {eyebrow}
         </p>
       ) : null}
       <h2
         className={cn(
-          "font-display text-[2rem] leading-[1.12] md:text-[2.75rem] lg:text-[3.15rem]",
+          "font-display text-[1.85rem] leading-[1.12] md:text-[2.35rem] lg:text-[2.7rem]",
           light ? "text-on-navy" : "text-navy",
         )}
       >

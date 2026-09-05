@@ -17,7 +17,7 @@
   --radius-xl: calc(var(--radius) + 4px);
   --radius-2xl: calc(var(--radius) + 8px);
 
-  --font-display: "Fraunces", ui-serif, Georgia, serif;
+  --font-display: "DM Serif Display", "Iowan Old Style", "Times New Roman", serif;
   --font-sans: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
   --color-background: var(--background);
@@ -124,6 +124,7 @@
     color: var(--color-foreground);
     font-family: var(--font-sans);
     -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
   }
 
   h1,
@@ -132,7 +133,8 @@
   h4 {
     font-family: var(--font-display);
     font-weight: 400;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.025em;
+    text-wrap: balance;
   }
 
   ::selection {

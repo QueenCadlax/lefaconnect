@@ -5,13 +5,15 @@ type LogoProps = {
   tone?: "light" | "dark";
   className?: string;
   withTagline?: boolean;
+  showWordmark?: boolean;
 };
 
-/**
- * LEFA CONNECT wordmark. Replace the mark with the supplied official
- * logo asset when it is provided by the client.
- */
-export function Logo({ tone = "dark", className, withTagline = false }: LogoProps) {
+export function Logo({
+  tone = "dark",
+  className,
+  withTagline = false,
+  showWordmark = true,
+}: LogoProps) {
   const isLight = tone === "light";
 
   return (
@@ -23,28 +25,36 @@ export function Logo({ tone = "dark", className, withTagline = false }: LogoProp
       <img
         src="/LC.png"
         alt="LEFA CONNECT"
-        className="h-12 w-12 shrink-0 object-contain sm:h-14 sm:w-14"
+        className={cn(
+          "h-12 w-16 shrink-0 object-cover object-center mix-blend-screen sm:h-14 sm:w-[4.25rem]",
+          !showWordmark && "h-10 w-14 sm:h-12 sm:w-[3.75rem]",
+        )}
       />
-      <span className="flex flex-col leading-none">
-        <span
-          className={cn(
-            "font-display text-[1.05rem] tracking-[0.16em] whitespace-nowrap uppercase",
-            isLight ? "text-on-navy" : "text-navy",
-          )}
-        >
-          LEFA <span className="text-heritage">CONNECT</span>
+      {showWordmark || withTagline ? (
+        <span className="flex flex-col leading-none">
+          {showWordmark ? (
+            <span
+              className={cn(
+                "font-sans text-[0.88rem] font-bold tracking-[0.14em] whitespace-nowrap uppercase",
+                isLight ? "text-on-navy" : "text-navy",
+              )}
+            >
+              LEFA <span className="text-heritage">CONNECT</span>
+            </span>
+          ) : null}
+          {withTagline ? (
+            <span
+              className={cn(
+                showWordmark ? "mt-2" : "mt-0",
+                "text-[0.68rem] tracking-[0.18em] uppercase",
+                isLight ? "text-on-navy-muted" : "text-muted-foreground",
+              )}
+            >
+              Heritage. Livelihood. Growth. Connected.
+            </span>
+          ) : null}
         </span>
-        {withTagline ? (
-          <span
-            className={cn(
-              "mt-2 text-[0.68rem] tracking-[0.18em] uppercase",
-              isLight ? "text-on-navy-muted" : "text-muted-foreground",
-            )}
-          >
-            Heritage. Livelihood. Growth. Connected.
-          </span>
-        ) : null}
-      </span>
+      ) : null}
     </Link>
   );
 }

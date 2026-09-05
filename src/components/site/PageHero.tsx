@@ -34,7 +34,7 @@ export function PageHero({
       <Container className="relative">
         <Reveal className="max-w-3xl">
           <p className="eyebrow text-[var(--gold)]">{eyebrow}</p>
-          <h1 className="mt-5 font-display text-[2.4rem] leading-[1.08] text-on-navy md:text-[3.4rem] lg:text-[4rem]">
+          <h1 className="mt-5 font-display text-[2.2rem] leading-[1.08] text-on-navy md:text-[2.8rem] lg:text-[3.2rem]">
             {title}
           </h1>
           {intro ? (

@@ -36,8 +36,7 @@ export function Reveal({
 
   return (
     <Tag
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ref={ref as any}
+      ref={ref as HTMLElement | null}
       data-visible={visible}
       style={{ transitionDelay: `${delay}ms` }}
       className={cn("reveal", className)}

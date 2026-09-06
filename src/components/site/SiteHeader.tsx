@@ -128,14 +128,14 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
           aria-label={open ? "Close menu" : "Open menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="flex h-11 w-11 items-center justify-center border border-[color-mix(in_oklab,var(--on-navy)_25%,transparent)] text-on-navy lg:hidden"
+          className="relative z-[70] flex h-11 w-11 items-center justify-center border border-[color-mix(in_oklab,var(--on-navy)_25%,transparent)] text-on-navy lg:hidden"
         >
           {open ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
         </button>
       </Container>
 
       {open ? (
-        <div className="fixed inset-x-0 top-20 bottom-0 z-50 overflow-y-auto bg-navy lg:hidden">
+        <div className="fixed inset-x-0 top-20 bottom-0 z-[60] h-[calc(100dvh-5rem)] overflow-y-auto bg-navy lg:hidden">
           <Container className="flex flex-col py-8">
             <nav aria-label="Mobile" className="flex flex-col">
               {HEADER_NAV_LINKS.map((link) => (

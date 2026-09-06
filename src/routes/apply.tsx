@@ -95,8 +95,8 @@ function ApplyPage() {
   return (
     <SiteShell>
       <main className="bg-background pt-20">
-        <Container className="grid gap-10 py-10 md:py-16 lg:grid-cols-[0.8fr_1.2fr] lg:gap-16 lg:py-20">
-          <aside className="lg:sticky lg:top-28 lg:self-start">
+        <Container className="grid min-w-0 gap-10 py-10 md:py-16 lg:grid-cols-[minmax(0,0.8fr)_minmax(0,1.2fr)] lg:gap-16 lg:py-20">
+          <aside className="min-w-0 lg:sticky lg:top-28 lg:self-start">
             <p className="eyebrow text-heritage">Lefa Connect</p>
             <h1 className="mt-5 max-w-md font-display text-[2.7rem] leading-[1.02] text-navy md:text-[3.5rem]">
               Membership application
@@ -119,8 +119,8 @@ function ApplyPage() {
             </ol>
           </aside>
 
-          <Reveal className="border border-[color-mix(in_oklab,var(--heritage)_22%,var(--border))] bg-card p-5 shadow-[0_20px_50px_-34px_rgba(10,20,30,0.35)] md:p-8">
-            <ol className="flex overflow-x-auto border-b border-border">
+          <Reveal className="min-w-0 border border-[color-mix(in_oklab,var(--heritage)_22%,var(--border))] bg-card p-5 shadow-[0_20px_50px_-34px_rgba(10,20,30,0.35)] md:p-8">
+            <ol className="flex flex-wrap border-b border-border">
               {STEPS.map((label, index) => (
                 <li key={label} className="min-w-[5rem] flex-1">
                   <button
@@ -246,9 +246,9 @@ function ApplicationStep({
         }
       }}
     >
-      <div className="mb-8 flex gap-4 border-b border-border pb-6">
+      <div className="mb-8 flex min-w-0 gap-4 border-b border-border pb-6">
         <span className="font-display text-2xl text-[var(--gold)]">{number}</span>
-        <div>
+        <div className="min-w-0">
           <h2 className="font-display text-2xl text-navy md:text-[2rem]">{title}</h2>
           <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{copy}</p>
         </div>
@@ -260,7 +260,7 @@ function ApplicationStep({
       {step === 4 && <DocumentFields />}
       {step === 5 && <KinFields />}
       {step === 6 && <ConsentFields />}
-      <div className="mt-10 flex justify-between border-t border-border pt-6">
+      <div className="mt-10 flex flex-col-reverse gap-3 border-t border-border pt-6 sm:flex-row sm:items-center sm:justify-between">
         <button
           type="button"
           onClick={() => window.history.back()}

@@ -5,9 +5,15 @@ import { join } from "node:path";
 
 const root = process.cwd();
 const persistTo = ".wrangler/local-db/v3";
+const permanentQaAdminEmail = "qcadlax@gmail.com";
+const fixtureEmails = ["stage6a.member@example.test", "stage6a.admin@example.test"];
+
+if (fixtureEmails.includes(permanentQaAdminEmail)) {
+  throw new Error(`Refusing to delete permanent QA admin account: ${permanentQaAdminEmail}`);
+}
 
 const sql = `
-DELETE FROM audit_log WHERE actor_user_id IN (SELECT id FROM user WHERE email IN ('stage6a.member@example.test', 'qcadlax@gmail.com')) OR id LIKE 'stage6a_%' OR entity_id LIKE 'stage6a_%';
+DELETE FROM audit_log WHERE actor_user_id IN (SELECT id FROM user WHERE email IN ('stage6a.member@example.test', 'stage6a.admin@example.test')) OR id LIKE 'stage6a_%' OR entity_id LIKE 'stage6a_%';
 DELETE FROM contribution_credit WHERE membership_id = 'stage6a_membership' OR id LIKE 'stage6a_%';
 DELETE FROM contribution_payment WHERE membership_id = 'stage6a_membership' OR idempotency_key LIKE 'STAGE6A-%';
 DELETE FROM contribution_period WHERE membership_id = 'stage6a_membership';
@@ -21,9 +27,9 @@ DELETE FROM referral WHERE referred_application_id = 'stage6a_membership_applica
 DELETE FROM membership_rule_version WHERE id = 'stage6a_rule_version';
 DELETE FROM membership_application WHERE id = 'stage6a_membership_application';
 DELETE FROM applicant_profile WHERE id = 'stage6a_applicant_profile';
-DELETE FROM session WHERE token IN ('stage6a-member-session', 'stage6a-admin-session') OR user_id IN (SELECT id FROM user WHERE email IN ('stage6a.member@example.test', 'qcadlax@gmail.com'));
-DELETE FROM account WHERE user_id IN (SELECT id FROM user WHERE email IN ('stage6a.member@example.test', 'qcadlax@gmail.com'));
-DELETE FROM user WHERE email IN ('stage6a.member@example.test', 'qcadlax@gmail.com');
+DELETE FROM session WHERE token IN ('stage6a-member-session', 'stage6a-admin-session') OR user_id IN (SELECT id FROM user WHERE email IN ('stage6a.member@example.test', 'stage6a.admin@example.test'));
+DELETE FROM account WHERE user_id IN (SELECT id FROM user WHERE email IN ('stage6a.member@example.test', 'stage6a.admin@example.test'));
+DELETE FROM user WHERE email IN ('stage6a.member@example.test', 'stage6a.admin@example.test');
 `;
 
 const sqlFile = join(mkdtempSync(join(tmpdir(), "lefa-stage6a-cleanup-")), "stage6a-cleanup.sql");

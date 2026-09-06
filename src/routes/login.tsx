@@ -89,7 +89,7 @@ function LoginPage() {
       <div className="flex items-center justify-center bg-background px-6 py-16 md:px-12">
         <div className="w-full max-w-md">
           <div className="lg:hidden">
-            <Logo />
+            <Logo className="[&>img]:h-16 [&>img]:w-24 sm:[&>img]:h-20 sm:[&>img]:w-28" />
           </div>
           <h1 className="mt-10 font-display text-3xl text-navy md:text-4xl lg:mt-0">
             {registering ? "Create your Lefa Connect account" : "Welcome back to Lefa Connect"}

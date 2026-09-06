@@ -26,7 +26,7 @@ export function Logo({
         src="/LC.png"
         alt="LEFA CONNECT"
         className={cn(
-          "h-12 w-16 shrink-0 object-cover object-center mix-blend-screen sm:h-14 sm:w-[4.25rem]",
+          "h-12 w-16 shrink-0 object-contain object-center sm:h-14 sm:w-[4.25rem]",
           !showWordmark && "h-10 w-14 sm:h-12 sm:w-[3.75rem]",
         )}
       />

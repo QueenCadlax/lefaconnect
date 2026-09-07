@@ -87,17 +87,17 @@ export function SiteFooter() {
         <div className="flex flex-col gap-5 pt-7 text-xs text-on-navy-muted sm:flex-row sm:items-center sm:justify-between">
           <p>© 2026 Lefa Connect</p>
           <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
-            <a href="#" className="transition-colors hover:text-on-navy">
+            <Link to="/privacy" className="transition-colors hover:text-on-navy">
               Privacy Policy
-            </a>
+            </Link>
             <span aria-hidden="true">·</span>
-            <a href="#" className="transition-colors hover:text-on-navy">
+            <Link to="/terms" className="transition-colors hover:text-on-navy">
               Terms of Use
-            </a>
+            </Link>
             <span aria-hidden="true">·</span>
-            <a href="#" className="transition-colors hover:text-on-navy">
+            <Link to="/cookies" className="transition-colors hover:text-on-navy">
               Cookie Policy
-            </a>
+            </Link>
           </div>
         </div>
       </Container>

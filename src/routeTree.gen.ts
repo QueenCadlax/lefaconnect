@@ -15,12 +15,15 @@ import { Route as AdminRouteImport } from './routes/admin'
 import { Route as ApplicantRouteImport } from './routes/applicant'
 import { Route as ApplyRouteImport } from './routes/apply'
 import { Route as ContactRouteImport } from './routes/contact'
+import { Route as CookiesRouteImport } from './routes/cookies'
 import { Route as DashboardRouteImport } from './routes/dashboard'
 import { Route as HowItWorksRouteImport } from './routes/how-it-works'
 import { Route as LivestockProjectsRouteImport } from './routes/livestock-projects'
 import { Route as LoginRouteImport } from './routes/login'
 import { Route as MembershipRouteImport } from './routes/membership'
 import { Route as OperationsRouteImport } from './routes/operations'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as TermsRouteImport } from './routes/terms'
 import { Route as ApiAuthSplatRouteImport } from './routes/api/auth/$'
 
 const IndexRoute = IndexRouteImport.update({
@@ -53,6 +56,11 @@ const ContactRoute = ContactRouteImport.update({
   path: '/contact',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CookiesRoute = CookiesRouteImport.update({
+  id: '/cookies',
+  path: '/cookies',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const DashboardRoute = DashboardRouteImport.update({
   id: '/dashboard',
   path: '/dashboard',
@@ -83,6 +91,16 @@ const OperationsRoute = OperationsRouteImport.update({
   path: '/operations',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TermsRoute = TermsRouteImport.update({
+  id: '/terms',
+  path: '/terms',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ApiAuthSplatRoute = ApiAuthSplatRouteImport.update({
   id: '/api/auth/$',
   path: '/api/auth/$',
@@ -96,12 +114,15 @@ export interface FileRoutesByFullPath {
   '/applicant': typeof ApplicantRoute
   '/apply': typeof ApplyRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/dashboard': typeof DashboardRoute
   '/how-it-works': typeof HowItWorksRoute
   '/livestock-projects': typeof LivestockProjectsRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/operations': typeof OperationsRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesByTo {
@@ -111,12 +132,15 @@ export interface FileRoutesByTo {
   '/applicant': typeof ApplicantRoute
   '/apply': typeof ApplyRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/dashboard': typeof DashboardRoute
   '/how-it-works': typeof HowItWorksRoute
   '/livestock-projects': typeof LivestockProjectsRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/operations': typeof OperationsRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRoutesById {
@@ -127,12 +151,15 @@ export interface FileRoutesById {
   '/applicant': typeof ApplicantRoute
   '/apply': typeof ApplyRoute
   '/contact': typeof ContactRoute
+  '/cookies': typeof CookiesRoute
   '/dashboard': typeof DashboardRoute
   '/how-it-works': typeof HowItWorksRoute
   '/livestock-projects': typeof LivestockProjectsRoute
   '/login': typeof LoginRoute
   '/membership': typeof MembershipRoute
   '/operations': typeof OperationsRoute
+  '/privacy': typeof PrivacyRoute
+  '/terms': typeof TermsRoute
   '/api/auth/$': typeof ApiAuthSplatRoute
 }
 export interface FileRouteTypes {
@@ -144,12 +171,15 @@ export interface FileRouteTypes {
     | '/applicant'
     | '/apply'
     | '/contact'
+    | '/cookies'
     | '/dashboard'
     | '/how-it-works'
     | '/livestock-projects'
     | '/login'
     | '/membership'
     | '/operations'
+    | '/privacy'
+    | '/terms'
     | '/api/auth/$'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -159,12 +189,15 @@ export interface FileRouteTypes {
     | '/applicant'
     | '/apply'
     | '/contact'
+    | '/cookies'
     | '/dashboard'
     | '/how-it-works'
     | '/livestock-projects'
     | '/login'
     | '/membership'
     | '/operations'
+    | '/privacy'
+    | '/terms'
     | '/api/auth/$'
   id:
     | '__root__'
@@ -174,12 +207,15 @@ export interface FileRouteTypes {
     | '/applicant'
     | '/apply'
     | '/contact'
+    | '/cookies'
     | '/dashboard'
     | '/how-it-works'
     | '/livestock-projects'
     | '/login'
     | '/membership'
     | '/operations'
+    | '/privacy'
+    | '/terms'
     | '/api/auth/$'
   fileRoutesById: FileRoutesById
 }
@@ -190,12 +226,15 @@ export interface RootRouteChildren {
   ApplicantRoute: typeof ApplicantRoute
   ApplyRoute: typeof ApplyRoute
   ContactRoute: typeof ContactRoute
+  CookiesRoute: typeof CookiesRoute
   DashboardRoute: typeof DashboardRoute
   HowItWorksRoute: typeof HowItWorksRoute
   LivestockProjectsRoute: typeof LivestockProjectsRoute
   LoginRoute: typeof LoginRoute
   MembershipRoute: typeof MembershipRoute
   OperationsRoute: typeof OperationsRoute
+  PrivacyRoute: typeof PrivacyRoute
+  TermsRoute: typeof TermsRoute
   ApiAuthSplatRoute: typeof ApiAuthSplatRoute
 }
 
@@ -243,6 +282,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ContactRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/cookies': {
+      id: '/cookies'
+      path: '/cookies'
+      fullPath: '/cookies'
+      preLoaderRoute: typeof CookiesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/dashboard': {
       id: '/dashboard'
       path: '/dashboard'
@@ -285,6 +331,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof OperationsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/terms': {
+      id: '/terms'
+      path: '/terms'
+      fullPath: '/terms'
+      preLoaderRoute: typeof TermsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/api/auth/$': {
       id: '/api/auth/$'
       path: '/api/auth/$'
@@ -302,12 +362,15 @@ const rootRouteChildren: RootRouteChildren = {
   ApplicantRoute: ApplicantRoute,
   ApplyRoute: ApplyRoute,
   ContactRoute: ContactRoute,
+  CookiesRoute: CookiesRoute,
   DashboardRoute: DashboardRoute,
   HowItWorksRoute: HowItWorksRoute,
   LivestockProjectsRoute: LivestockProjectsRoute,
   LoginRoute: LoginRoute,
   MembershipRoute: MembershipRoute,
   OperationsRoute: OperationsRoute,
+  PrivacyRoute: PrivacyRoute,
+  TermsRoute: TermsRoute,
   ApiAuthSplatRoute: ApiAuthSplatRoute,
 }
 export const routeTree = rootRouteImport

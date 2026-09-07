@@ -152,6 +152,7 @@ export const getApplicantWorkspace = createServerFn({ method: "GET" }).handler(a
       reference: application.applicationReference,
       status: application.status,
       membershipCategory: application.membershipCategory,
+      reasonForJoining: application.reasonForJoining,
       submittedAt: application.submittedAt,
       profile,
       kin,

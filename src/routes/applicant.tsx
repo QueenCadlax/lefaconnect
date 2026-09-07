@@ -143,13 +143,18 @@ function ApplicantWorkspace() {
 
   const saveMembershipDetails = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    const form = new FormData(event.currentTarget);
+    const category = String(form.get("category") ?? "").trim();
+    if (!category) {
+      setMessage("Please enter a membership category before saving.");
+      return;
+    }
     setSaving(true);
     try {
-      const form = new FormData(event.currentTarget);
       await saveMembershipSelection({
         data: {
           slotCount: Number(form.get("slotCount") ?? 1),
-          category: String(form.get("category") ?? ""),
+          category,
           livestockCount: Number(form.get("livestockCount") ?? 0),
           livestockTypes: form.getAll("livestockType").map(String),
           reasonForJoining: String(form.get("reason") ?? ""),
@@ -719,10 +724,13 @@ function ApplicantWorkspace() {
                       />
                     </label>
                     <label className="space-y-2 text-sm text-navy">
-                      <span>Membership category</span>
+                      <span>
+                        Membership category <span className="text-heritage">*</span>
+                      </span>
                       <input
                         name="category"
-                        defaultValue={""}
+                        required
+                        defaultValue={application?.membershipCategory ?? ""}
                         className="w-full border border-input bg-transparent px-3 py-2 text-sm"
                       />
                     </label>
@@ -757,7 +765,7 @@ function ApplicantWorkspace() {
                       <span>Reason for joining</span>
                       <textarea
                         name="reason"
-                        defaultValue={""}
+                        defaultValue={application?.reasonForJoining ?? ""}
                         className="min-h-28 w-full border border-input bg-transparent px-3 py-2 text-sm"
                       />
                     </label>

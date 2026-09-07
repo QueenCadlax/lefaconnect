@@ -172,12 +172,12 @@ export function AboutPreview() {
 export function FounderPreview() {
   return (
     <Section tone="ivory" className="border-y border-border">
-      <Container className="grid items-center gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
-        <Reveal className="relative aspect-[4/3] max-h-[30rem] overflow-hidden border border-[color-mix(in_oklab,var(--heritage)_28%,var(--border))]">
+      <Container className="grid items-stretch gap-10 lg:grid-cols-[0.78fr_1.22fr] lg:gap-16">
+        <Reveal className="relative min-h-[22rem] overflow-hidden bg-[#e9e4db] lg:min-h-full">
           <img
             src="/Lowveldhub%20x%20Lefa%20Connect%20Founder.png"
             alt="Lefa Connect founder speaking with cattle behind him"
-            className="h-full w-full object-cover object-center"
+            className="h-full min-h-[22rem] w-full object-cover object-center scale-[1.06]"
           />
         </Reveal>
 
@@ -224,12 +224,6 @@ export function FounderPreview() {
             <p className="font-display text-base leading-tight text-navy md:text-lg">
               Building Together. Growing Together. Leaving a Heritage.
             </p>
-          </Reveal>
-          <Reveal delay={180} className="mt-7">
-            <LefaLink to="/about" variant="outline">
-              Read the Founder&apos;s Story
-              <ArrowRight className="h-4 w-4" aria-hidden="true" />
-            </LefaLink>
           </Reveal>
         </div>
       </Container>

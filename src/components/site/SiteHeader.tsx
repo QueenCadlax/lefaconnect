@@ -26,10 +26,14 @@ const HEADER_NAV_LINKS = [
   { to: "/contact", label: "Contact" },
 ] as const;
 
+const MEMBER_DASHBOARD_LINK = { to: "/dashboard", label: "Member Dashboard" } as const;
+
 export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const [authenticated, setAuthenticated] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [logoutError, setLogoutError] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 24);
@@ -41,18 +45,48 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   useEffect(() => {
     void fetch("/api/auth/get-session", { credentials: "include" })
       .then((response) => (response.ok ? response.json() : null))
-      .then((session: { user?: unknown } | null) => setAuthenticated(Boolean(session?.user)))
-      .catch(() => setAuthenticated(false));
+      .then((session: { user?: { status?: string } } | null) => {
+        setAuthenticated(Boolean(session?.user));
+        setIsAdmin(session?.user?.status === "admin");
+      })
+      .catch(() => {
+        setAuthenticated(false);
+        setIsAdmin(false);
+      });
   }, []);
 
   const logout = async () => {
-    await fetch("/api/auth/sign-out", {
-      method: "POST",
-      credentials: "include",
-      headers: { "Content-Type": "application/json" },
-      body: "{}",
-    });
-    window.location.href = "/login";
+    setLogoutError(false);
+    try {
+      const response = await fetch("/api/auth/sign-out", {
+        method: "POST",
+        credentials: "include",
+        headers: { "Content-Type": "application/json" },
+        body: "{}",
+      });
+      if (!response.ok) {
+        throw new Error("Sign out request failed.");
+      }
+
+      const sessionResponse = await fetch("/api/auth/get-session", {
+        credentials: "include",
+      });
+      const session = sessionResponse.ok
+        ? ((await sessionResponse.json()) as { user?: { status?: string } | null })
+        : null;
+
+      if (session?.user) {
+        throw new Error("Session still active after sign out.");
+      }
+
+      setAuthenticated(false);
+      setIsAdmin(false);
+      window.location.replace("/login");
+    } catch {
+      setAuthenticated(false);
+      setIsAdmin(false);
+      setLogoutError(true);
+    }
   };
 
   useEffect(() => {
@@ -80,11 +114,19 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
         />
 
         <nav aria-label="Primary" className="hidden items-center gap-3 lg:flex xl:gap-4">
+          {authenticated && !isAdmin ? (
+            <Link
+              to={MEMBER_DASHBOARD_LINK.to}
+              activeProps={{ "data-active": "true" }}
+              className="relative z-10 inline-flex shrink-0 text-[0.58rem] font-medium tracking-[0.06em] text-on-navy-muted uppercase transition-all duration-300 hover:text-on-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent after:absolute after:-bottom-3 after:left-0 after:h-0.5 after:w-0 after:bg-[var(--gold)] after:transition-all after:duration-300 hover:after:w-full data-[active=true]:text-on-navy data-[active=true]:after:w-full"
+            >
+              {MEMBER_DASHBOARD_LINK.label}
+            </Link>
+          ) : null}
           {HEADER_NAV_LINKS.map((link) => (
             <Link
               key={link.to}
               to={link.to}
-              activeOptions={{ exact: link.to === "/" }}
               activeProps={{ "data-active": "true" }}
               className="relative text-[0.58rem] font-medium tracking-[0.06em] text-on-navy-muted uppercase transition-all duration-300 hover:text-on-navy focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[var(--gold)] focus-visible:ring-offset-2 focus-visible:ring-offset-transparent after:absolute after:-bottom-3 after:left-0 after:h-0.5 after:w-0 after:bg-[var(--gold)] after:transition-all after:duration-300 hover:after:w-full data-[active=true]:text-on-navy data-[active=true]:after:w-full"
             >
@@ -94,14 +136,33 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
         </nav>
 
         <div className="hidden shrink-0 items-center gap-2 lg:flex">
+          {logoutError ? (
+            <span className="text-[0.56rem] font-medium tracking-[0.08em] text-red-300 uppercase">
+              Sign out failed
+            </span>
+          ) : null}
           {authenticated ? (
-            <button
-              type="button"
-              onClick={() => void logout()}
-              className="h-9 px-2 text-[0.62rem] font-semibold tracking-[0.08em] text-on-navy-muted uppercase hover:text-on-navy"
-            >
-              Logout
-            </button>
+            <>
+              {!isAdmin ? (
+                <LefaLink
+                  to={MEMBER_DASHBOARD_LINK.to}
+                  variant="ghostLight"
+                  size="sm"
+                  className="h-9 shrink-0 px-2 text-[0.62rem] tracking-[0.08em] text-on-navy-muted hover:text-on-navy"
+                >
+                  Member Dashboard
+                </LefaLink>
+              ) : null}
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => void logout()}
+                  className="h-9 px-2 text-[0.62rem] font-semibold tracking-[0.08em] text-on-navy-muted uppercase hover:text-on-navy"
+                >
+                  Logout
+                </button>
+              </div>
+            </>
           ) : (
             <LefaLink
               to="/login"
@@ -138,6 +199,15 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
         <div className="fixed inset-x-0 top-20 bottom-0 z-[60] h-[calc(100dvh-5rem)] overflow-y-auto bg-navy lg:hidden">
           <Container className="flex flex-col py-8">
             <nav aria-label="Mobile" className="flex flex-col">
+              {authenticated && !isAdmin ? (
+                <Link
+                  to={MEMBER_DASHBOARD_LINK.to}
+                  onClick={() => setOpen(false)}
+                  className="border-b border-[color-mix(in_oklab,var(--on-navy)_10%,transparent)] py-5 font-display text-2xl text-on-navy"
+                >
+                  {MEMBER_DASHBOARD_LINK.label}
+                </Link>
+              ) : null}
               {HEADER_NAV_LINKS.map((link) => (
                 <Link
                   key={link.to}
@@ -153,6 +223,9 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
               <LefaLink to="/apply" variant="ivory" size="lg" onClick={() => setOpen(false)}>
                 Become a Member
               </LefaLink>
+              {logoutError ? (
+                <p className="text-xs text-red-300">Sign out failed. Please try again.</p>
+              ) : null}
               {authenticated ? (
                 <button
                   type="button"

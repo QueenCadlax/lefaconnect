@@ -32,7 +32,19 @@ export function PortalShell({
         body: "{}",
       });
       if (!response.ok) throw new Error("Sign out failed.");
-      window.location.href = "/login";
+
+      const sessionResponse = await fetch("/api/auth/get-session", {
+        credentials: "include",
+      });
+      const session = sessionResponse.ok
+        ? ((await sessionResponse.json()) as { user?: { status?: string } | null })
+        : null;
+
+      if (session?.user) {
+        throw new Error("Session still active after sign out.");
+      }
+
+      window.location.replace("/login");
     } catch {
       setSignOutError(true);
     }

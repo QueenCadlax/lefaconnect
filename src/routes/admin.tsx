@@ -189,7 +189,10 @@ function AdminCommunicationCentre() {
     (conversation: any) => conversation.memberUserId === selectedMemberId,
   );
   return (
-    <section id="communication" className="surface-card mt-10 bg-card p-5 md:p-8">
+    <section
+      id="communication"
+      className="surface-card mt-10 min-w-0 bg-card p-5 md:p-8 lg:col-span-3"
+    >
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="eyebrow text-heritage">Communication Centre</p>
@@ -205,8 +208,8 @@ function AdminCommunicationCentre() {
           {data.conversations.length} conversations
         </span>
       </div>
-      <div className="mt-8 grid gap-8 xl:grid-cols-2">
-        <div className="border border-border p-5">
+      <div className="mt-8 grid min-w-0 gap-8 xl:grid-cols-2">
+        <div className="min-w-0 border border-border p-5">
           <h3 className="font-display text-2xl text-navy">Announcements</h3>
           <div className="mt-4 space-y-3">
             {data.announcements.map((announcement: any) => (
@@ -276,7 +279,7 @@ function AdminCommunicationCentre() {
                 className="min-h-12 w-full border border-input bg-background px-3 text-sm"
               >
                 <option value="">Choose member</option>
-                {data.members.map((member: any) => (
+                {data.members.map((member: { id: string; name: string; email: string }) => (
                   <option key={member.id} value={member.id}>
                     {member.name} · {member.email}
                   </option>
@@ -293,7 +296,7 @@ function AdminCommunicationCentre() {
             </button>
           </div>
         </div>
-        <div className="border border-border p-5">
+        <div className="min-w-0 border border-border p-5">
           <h3 className="font-display text-2xl text-navy">Private conversations</h3>
           <select
             value={selectedMemberId}

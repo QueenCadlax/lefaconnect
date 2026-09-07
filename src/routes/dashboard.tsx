@@ -49,30 +49,29 @@ function money(cents: number | null | undefined) {
   return `R${amount.replace(/\B(?=(\d{3})+(?!\d))/g, ",")}`;
 }
 
-function pad(value: number) {
-  return String(value).padStart(2, "0");
-}
+const southAfricaDateFormatter = new Intl.DateTimeFormat("en-ZA", {
+  timeZone: "Africa/Johannesburg",
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+});
+
+const southAfricaDateTimeFormatter = new Intl.DateTimeFormat("en-ZA", {
+  timeZone: "Africa/Johannesburg",
+  day: "2-digit",
+  month: "short",
+  year: "numeric",
+  hour: "2-digit",
+  minute: "2-digit",
+  hour12: false,
+});
 
 function southAfricaDate(value: Date | string, includeTime: boolean) {
-  const date = new Date(new Date(value).getTime() + 2 * 60 * 60 * 1000);
-  const months = [
-    "Jan",
-    "Feb",
-    "Mar",
-    "Apr",
-    "May",
-    "Jun",
-    "Jul",
-    "Aug",
-    "Sep",
-    "Oct",
-    "Nov",
-    "Dec",
-  ];
-  const formatted = `${pad(date.getUTCDate())} ${months[date.getUTCMonth()]} ${date.getUTCFullYear()}`;
-  return includeTime
-    ? `${formatted}, ${pad(date.getUTCHours())}:${pad(date.getUTCMinutes())}`
-    : formatted;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Not available";
+
+  const formatter = includeTime ? southAfricaDateTimeFormatter : southAfricaDateFormatter;
+  return formatter.format(date);
 }
 
 function date(value: Date | null | undefined) {

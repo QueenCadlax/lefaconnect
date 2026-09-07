@@ -304,7 +304,7 @@ function AdminCommunicationCentre() {
             className="mt-4 min-h-12 w-full border border-input bg-background px-3 text-sm"
           >
             <option value="">Choose a member</option>
-            {data.members.map((member) => (
+            {data.members.map((member: any) => (
               <option key={member.id} value={member.id}>
                 {member.name} · {member.membershipNumber}
               </option>

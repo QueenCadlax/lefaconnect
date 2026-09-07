@@ -124,11 +124,11 @@ function MemberCommunication({
 
   useEffect(() => {
     const notificationIds = communication.notifications
-      .filter((item) => !item.readAt)
-      .map((item) => item.id);
+      .filter((item: any) => !item.readAt)
+      .map((item: any) => item.id);
     const announcementIds = communication.announcements
-      .filter((item) => !item.readAt)
-      .map((item) => item.id);
+      .filter((item: any) => !item.readAt)
+      .map((item: any) => item.id);
     if (notificationIds.length || announcementIds.length || communication.conversation?.id) {
       void markCommunicationRead({
         data: { notificationIds, announcementIds, conversationId: communication.conversation?.id },
@@ -181,7 +181,7 @@ function MemberCommunication({
     if (!source) {
       const audio = await getVoiceMessage({ data: { messageId } });
       source = `data:${audio.mimeType || mimeType};base64,${audio.dataBase64}`;
-      setAudioUrls((current) => ({ ...current, [messageId]: source }));
+      setAudioUrls((current) => ({ ...current, [messageId]: source as string }));
     }
     await new Audio(source).play();
   };
@@ -191,7 +191,7 @@ function MemberCommunication({
       <PortalSection icon={Bell} label="Latest from Lefa Connect" title="Announcements">
         <div id="announcements" />
         {communication.announcements.length ? (
-          communication.announcements.map((announcement) => (
+          communication.announcements.map((announcement: any) => (
             <article key={announcement.id} className="border-b border-border py-4 last:border-b-0">
               <div className="flex items-center justify-between gap-3">
                 <h3 className="font-semibold text-navy">{announcement.title}</h3>
@@ -224,7 +224,7 @@ function MemberCommunication({
         <div id="messages" />
         {communication.conversation?.messages.length ? (
           <div className="space-y-3">
-            {communication.conversation.messages.map((item) => (
+            {communication.conversation.messages.map((item: any) => (
               <div key={item.id} className="border border-border bg-background p-4">
                 <div className="flex items-center justify-between gap-3">
                   <p className="text-xs font-semibold uppercase tracking-[0.12em] text-heritage">

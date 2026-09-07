@@ -15,7 +15,7 @@ export function Field({
   id: string;
   label: string;
   hint?: ReactNode;
-  required?: boolean;
+  required?: boolean | undefined;
   children: ReactNode;
   className?: string;
 }) {

@@ -2,6 +2,7 @@ import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "@better-auth/drizzle-adapter";
 import { drizzle, type DrizzleD1Database } from "drizzle-orm/d1";
 import { accounts, sessions, users, verifications } from "./db/schema";
+import * as schema from "./db/schema";
 
 export type Phase1Env = {
   DB: D1Database;

@@ -45,9 +45,10 @@ export function SiteHeader({ overlay = false }: { overlay?: boolean }) {
   useEffect(() => {
     void fetch("/api/auth/get-session", { credentials: "include" })
       .then((response) => (response.ok ? response.json() : null))
-      .then((session: { user?: { status?: string } } | null) => {
-        setAuthenticated(Boolean(session?.user));
-        setIsAdmin(session?.user?.status === "admin");
+      .then((session) => {
+        const typedSession = session as { user?: { status?: string } } | null;
+        setAuthenticated(Boolean(typedSession?.user));
+        setIsAdmin(typedSession?.user?.status === "admin");
       })
       .catch(() => {
         setAuthenticated(false);

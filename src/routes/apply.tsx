@@ -39,7 +39,7 @@ export const Route = createFileRoute("/apply")({
 
 function ApplyPage() {
   const [step, setStep] = useState(0);
-  const [applicationData, setApplicationData] = useState<Record<string, string>>({});
+  const [applicationData, setApplicationData] = useState<Record<string, any>>({});
   const [submission, setSubmission] = useState<{ reference: string; status: string } | null>(null);
   const [submissionError, setSubmissionError] = useState("");
 
@@ -68,12 +68,12 @@ function ApplyPage() {
                 </div>
                 <div className="flex justify-between gap-4 py-2">
                   <dt>Selected memberships</dt>
-                  <dd className="font-semibold text-navy">{applicationData.slotCount}</dd>
+                  <dd className="font-semibold text-navy">{applicationData["slotCount"]}</dd>
                 </div>
                 <div className="flex justify-between gap-4 py-2">
                   <dt>Shares</dt>
                   <dd className="font-semibold text-navy">
-                    {Number(applicationData.slotCount) * 10}
+                    {Number(applicationData["slotCount"]) * 10}
                   </dd>
                 </div>
               </dl>
@@ -146,7 +146,7 @@ function ApplyPage() {
                 const complete = { ...applicationData, ...data };
                 setApplicationData(complete);
                 setSubmissionError("");
-                if (complete.password !== complete.passwordConfirmation) {
+                if (complete["password"] !== complete["passwordConfirmation"]) {
                   setSubmissionError("Passwords do not match.");
                   return;
                 }
@@ -155,9 +155,9 @@ function ApplyPage() {
                   headers: { "Content-Type": "application/json" },
                   credentials: "include",
                   body: JSON.stringify({
-                    name: `${complete.firstName} ${complete.lastName}`.trim(),
-                    email: complete.email,
-                    password: complete.password,
+                    name: `${complete["firstName"]} ${complete["lastName"]}`.trim(),
+                    email: complete["email"],
+                    password: complete["password"],
                   }),
                 });
                 if (!accountResponse.ok) {
@@ -170,8 +170,8 @@ function ApplyPage() {
                   const result = await submitPublicApplication({
                     data: {
                       ...complete,
-                      slotCount: Number(complete.slotCount),
-                    } as Parameters<typeof submitPublicApplication>[0]["data"],
+                      slotCount: Number(complete["slotCount"]),
+                    },
                   });
                   window.location.href = "/applicant";
                 } catch (error) {

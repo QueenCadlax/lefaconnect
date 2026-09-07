@@ -9,6 +9,6 @@ export function getAuth() {
   return createAuth({
     DB: env.DB,
     BETTER_AUTH_SECRET: env.BETTER_AUTH_SECRET,
-    BETTER_AUTH_URL: env.BETTER_AUTH_URL,
+    ...(env.BETTER_AUTH_URL ? { BETTER_AUTH_URL: env.BETTER_AUTH_URL } : {}),
   });
 }

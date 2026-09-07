@@ -45,7 +45,7 @@ export function ResidentialLocationFields({
           value={countryName}
           onChange={(event) => {
             setCountryName(event.target.value);
-            setCountryCode(event.target.selectedOptions[0]?.dataset.code ?? "");
+            setCountryCode(event.target.selectedOptions[0]?.dataset["code"] ?? "");
             setRegionName("");
             setRegionCode("");
             setDistrictName("");
@@ -68,7 +68,7 @@ export function ResidentialLocationFields({
             value={regionName}
             onChange={(event) => {
               setRegionName(event.target.value);
-              setRegionCode(event.target.selectedOptions[0]?.dataset.code ?? "");
+              setRegionCode(event.target.selectedOptions[0]?.dataset["code"] ?? "");
               setDistrictName("");
             }}
           >
